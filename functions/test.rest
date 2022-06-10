@@ -16,8 +16,6 @@ POST https://us-central1-kortana-test.cloudfunctions.net/app/createUser
 
 ### 
 
-POST https://mainnet.infura.io/v3/13f845cb660343af8ece470c1b937997 
 
-### 
 
 POST https://us-central1-kortana-test.cloudfunctions.net/app/web3 
