@@ -1,0 +1,31 @@
+# Deploy 
+navigate into the functions folder and run `npm deploy` 
+
+# Testing 
+basUrl 
+```sh 
+https://us-central1-kortana-test.cloudfunctions.net/app
+```
+
+Endpoints 
+
+```JS 
+
+// test 
+GET https://us-central1-kortana-test.cloudfunctions.net/app
+
+// web3: 
+POST https://us-central1-kortana-test.cloudfunctions.net/app/web3 
+
+// createUser
+POST https://us-central1-kortana-test.cloudfunctions.net/app/createUser 
+
+
+{
+    "phoneNumber": "0543892565",
+    "password": "somepassword"
+   
+
+}
+
+```
