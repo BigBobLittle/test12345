@@ -1,0 +1,30 @@
+name: Checkout and Deploy Functions Project to Firebase
+on:
+  push:
+    branches: main
+
+jobs:
+  build:
+    name: Build and Deploy to Production
+    runs-on: ubuntu-latest
+
+    env:
+      working-directory: ./functions
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 14 and install dependencies
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: npm install
+        working-directory: ${{ env.working-directory }}
+
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
