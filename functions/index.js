@@ -17,14 +17,15 @@ try {
 }
 const { createNewUser, web3 } = require("./auth");
 
-
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// api endpoints 
-app.get("/", (req, res) => res.status(200).send("Hey there!"));
+// api endpoints
+app.get("/", (req, res) =>
+  res.status(200).send("Hey there! DEPLOYED COMPLETE")
+);
 app.post("/createUser", createNewUser);
 app.post("/web3", web3);
 exports.app = functions.https.onRequest(app);

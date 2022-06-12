@@ -1,19 +1,20 @@
 const { default: axios } = require("axios");
-const admin = require("firebase-admin");
-const bcrypt = require("bcryptjs")
+const functions = require("firebase-functions");
+const bcrypt = require("bcryptjs");
+const { db } = require("../config");
 
 const createNewUser = async (req, res) => {
   const { phoneNumber, password } = req.body;
 
   if (!phoneNumber || !password) {
-    res.status(422).send({
+    return res.status(422).send({
       error: true,
       message: "Please provide phone number and password to create account",
     });
   }
 
- try {
-    const createUser = await admin.auth().createUser({
+  try {
+    const createUser = await db.collection("users").add({
       phoneNumber,
       password: await bcrypt.hash(password, 10),
     });
@@ -23,25 +24,24 @@ const createNewUser = async (req, res) => {
       message: "User account successfully created",
       createUser,
     });
- } catch (error) {
-   res.status(400).send("Something went wrong")
- }
+  } catch (error) {
+    res.status(400).send("Something went wrong");
+  }
 };
 
 const web3 = async (req, res) => {
-  const dataString =
-    '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["latest",true], "id":1}';
-
   const options = {
-    url: `https://mainnet.infura.io/v3/13f845cb660343af8ece470c1b937997`,
+    url: `https://mainnet.infura.io/v3/${functions.config().infura.key}`,
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    data: dataString,
+    data: '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["latest",true], "id":1}',
   };
 
   try {
-    const response = await axios(options);
-    return res.json(response);
+    const { data } = await axios.post(options.url, options.data, {
+      ...options.headers,
+    });
+    return res.json({ hash: data.result.hash });
   } catch (error) {
     res.status(400).send("Something went wrong, please try again later");
   }
