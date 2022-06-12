@@ -15,7 +15,7 @@ try {
 } catch (err) {
   admin.app();
 }
-const { createNewUser, web3 } = require("./auth");
+const { createNewUser, web3, loginUser } = require("./auth");
 
 const app = express();
 app.use(cors());
@@ -24,8 +24,9 @@ app.use(express.urlencoded({ extended: false }));
 
 // api endpoints
 app.get("/", (req, res) =>
-  res.status(200).send("Hey there! DEPLOYED COMPLETE")
+  res.status(200).json({ message: "Hey there! DEPLOYED COMPLETE" })
 );
 app.post("/createUser", createNewUser);
 app.post("/web3", web3);
+app.post("/login", loginUser);
 exports.app = functions.https.onRequest(app);

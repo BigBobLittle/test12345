@@ -1,4 +1,6 @@
-baseUrl = https://us-central1-kortana-test.cloudfunctions.net/app
+
+
+GET https://us-central1-kortana-test.cloudfunctions.net/app
 
 ### 
 
@@ -9,12 +11,25 @@ Content-Type: application/json
 
 {
     "phoneNumber": "0543892565",
-    "password": "somepassword"
+    "password": "someDummypassword"
    
 
 }
 
 ### 
+
+
+POST https://us-central1-kortana-test.cloudfunctions.net/app/login 
+Content-Type: application/json
+
+{
+    "phoneNumber": "0543892565",
+    "password": "someDummypassword"
+   
+
+}
+
+###
 
 
 
