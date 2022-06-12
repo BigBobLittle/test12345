@@ -46,8 +46,10 @@ const loginUser = async (req, res) => {
     });
   }
 
-  const getUser =  db.collection("users").doc(phoneNumber);
-  const findUser = await getUser.get(); 
+  const findUser = await db
+    .collection("users")
+    .where("phoneNumber").isEqual(phoneNumber)
+    .get();
 
   if (!findUser.exists) {
     return res.status(422).json({
